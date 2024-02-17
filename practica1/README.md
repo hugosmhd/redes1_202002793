@@ -6,6 +6,7 @@
 **Sección**: A
 
 Topología final:
+
 ![Topología Final](https://media.discordapp.net/attachments/764502305009303622/1208246739086213132/image.png?ex=65e29676&is=65d02176&hm=a861ce90ba6ed1bad232d678f1432dd28ea11900e16019d5e4002c6c260accc5&=&format=webp&quality=lossless&width=738&height=388)
 
 ## Configuración de las VPCs (una por cada área) en total 7
