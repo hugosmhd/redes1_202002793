@@ -40,6 +40,7 @@ Topología final:
 ## Demostración de la captura de un paquete ARP/ICMP (solo 1 en general), incluyendo captura de pantalla
 
 1. Se empieza a simular el ping desde la PC 117 de Recursos Humanos (Primer nivel) hacia la PC 212 de la Oficina A (Segundo nivel).
+
 ![Ping desde la PC 117 hacia 212](https://media.discordapp.net/attachments/764502305009303622/1208244013753180170/image.png?ex=65e293ec&is=65d01eec&hm=70a35545dcac42d7b04d2ff4e72511e23bed0588ee3bc8a1c5ed8d740334f57b&=&format=webp&quality=lossless&width=741&height=389)
 
 2. Mensaje de difusión para conocer la dirección MAC de la PC a la que se quiere hacer ping.
