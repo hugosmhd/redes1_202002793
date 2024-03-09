@@ -89,16 +89,16 @@ sss
 </table>
 
 ## Capturas de la implementación de las topologías.
-Topologia completa:
+Topologia completa:  
 ![Topología completa](https://media.discordapp.net/attachments/764502305009303622/1215816339080609972/image.png?ex=65fe2034&is=65ebab34&hm=5231ebc2942e137c62ea6b17b62dbfad753d8c48d87630894c0380c884b21bf4&=&format=webp&quality=lossless&width=543&height=389)
 
-Backbone:
+Backbone:  
 ![Backbone](https://media.discordapp.net/attachments/764502305009303622/1215816674029338745/image.png?ex=65fe2083&is=65ebab83&hm=5dd9b27608e2620522f9af6ec278a877ced27a989381f07ef3df8683f1f8a758&=&format=webp&quality=lossless&width=628&height=389)
 
-Centro Administrativo:
+Centro Administrativo:  
 ![Centro Administrativo](https://media.discordapp.net/attachments/764502305009303622/1215816922784989356/image.png?ex=65fe20bf&is=65ebabbf&hm=33df8332593d9eab83c4f6cf9436abcdc78d77edd036d4178c93035ed2b970fe&=&format=webp&quality=lossless&width=448&height=389)
 
-Área de Trabajo:
+Área de Trabajo:  
 ![Area de trabajo](https://media.discordapp.net/attachments/764502305009303622/1215817118960980118/image.png?ex=65fe20ed&is=65ebabed&hm=8c89958dc8bbf871f5af83d082575b3a74bc4d8907f46b7579ce0f0d204221ff&=&format=webp&quality=lossless&width=809&height=389)
 
 ## Detalle de los comandos usados
