@@ -195,3 +195,9 @@
     - ip address 192.158.31.65 255.255.255.240
     - no shutdown 
 
+## Capturas protocolo HSRP
+
+![HSRP1](Imagenes/HSRPJ1.jpeg)
+
+
+![HSRP2](Imagenes/HSRPJ2.jpeg)
