@@ -1,3 +1,5 @@
+# MANUAL TECNICO
+
 ## Asignación de Subredes usando VLSM para la sede Jutiapa
 
 1. **VLAN Ventas de 25 hosts:**
@@ -48,7 +50,9 @@
 
 ![Tabla_Q](Imagenes/Tabla_Escuintla.jpeg)
 
+
 <!-- SEDE QUICHE Y PETEN -->
+
 
 
 ## Asignación de Subredes usando VLSM para la sede Quiche
@@ -108,329 +112,86 @@
 
 ![Tabla_P](Imagenes/Tabla_Peten.png)
 
-## 
+# CAPTURAS DE LA IMPLEMENTACION DE LAS TOPOLOGIAS 
+
+- Vlans
+
+![topo1](Imagenes/vlans.png)
+
+- Configuracion router-on-a-stick
+
+![topo2](Imagenes/on-a-stick.png)
 
 
-## Comandos usados en Jutiapa
+# COMANDOS USADOS
 
-**SW de Capa 3**
+- Cofiguracion de vlans (todos los switches)
+    - enable
+    - configure terminal
+    - vlan 14
+    - name RRHH
+    - exit
+    - vlan 24
+    - name contabilidad
+    - exit
+    - vlan 34
+    - name ventas
+    - exit
+    - vlan 44
+    - name informatica
+    - exit
+- configuracion switchpor modo trunk (switches capa 2)
+    - enable
+    - configure terminal
+    - interface fa0/1 
+    - switchport mode trunk
+- configuracion switch capa 3
+    - enable
+    - configure terminal
+    - interface vlan 34
+    - ip address 192.158.31.1 255.255.255.224
+    - no shutdown
+    - exit
+    - interface vlan 44
+    - ip address 192.158.31.33 255.255.255.224
+    - no shutdown
+    - exit
+    - interface vlan 14
+    - ip address 192.158.31.65 255.255.255.240
+    - no shutdown
+    - exit
+    - interface vlan 34
+    - ip address 192.158.31.65 255.255.255.240
+    - no shutdown
+    - exit
+    - ip routing
+    - interface fa0/10
+    - switchport mode access
+    - switchport access vlan 34
+    - exit
+    - inerface fa0/11
+    - switchport mode access
+    - switcport access vlan 44
+    - exit
+    - inerface fa0/12
+    - switchport mode access
+    - switcport access vlan 14
+    - exit
+- configuracion de router on a stick
+    - enable
+    - configure terminal
+    - interface fa4/0 
+    - no shutdown
+    - interface fa4/0.34
+    - encapsulation dot1Q 34
+    - ip address 192.158.31.1 255.255.255.224
+    - no shutdown 
+    - interface fa4/0.44
+    - encapsulaition dot1Q 44
+    - ip address 192.158.31.33 255.255.255.224
+    - no shutdown 
+    - interface fa4/0.14
+    - encapsulaition dot1Q 14
+    - ip address 192.158.31.65 255.255.255.240
+    - no shutdown 
 
-```
--- creacion de vlans
-enable
-configure terminal
-vtp mode server
-vtp domain jutiapa
-vtp password 123
-vtp version 2
-interface range f0/1-2
-switchport trunk allowed vlan all
-vlan 14
-name rrhh
-exit
-vlan 24
-name contabilidad
-exit
-vlan 34
-name ventas
-exit
-vlan 44
-name informatica
-exit
-exit
-wr
-
--- Para subinterfaces
-interface vlan 14
-ip address 192.168.31.49 255.255.255.240
-exit
-interface vlan 24
-ip address 192.168.31.65 255.255.255.248
-exit
-interface vlan 34
-ip address 192.168.31.1 255.255.255.224
-exit
-interface vlan 44
-ip address 192.168.31.33 255.255.255.240
-exit
-ip routing
-
--- rpvst
-spanning-tree vlan 1 root primary
-spanning-tree vlan 14 root primary
-spanning-tree vlan 24 root primary
-spanning-tree vlan 34 root primary
-spanning-tree vlan 44 root primary
-spanning-tree mode rapid-pvs
-```
-
-**SW Clientes**
-
-```
--- Aceso a las vlans
-enable
-configure terminal
-vtp mode client
-interface range f0/2-3
-switchport mode trunk
-switchport trunk allowed vlan all
-exit
-vtp domain jutiapa
-vtp password 123
-exit
-wr
-
--- rpvst
-spanning-tree mode pvst 
-```
-
-**LACP **
-```
-enable
-conf t
-interface range fa0/1-2
-shutdown
-channel-group 1 mode active
-no shutdown
-exit
-interface port-channel 1
-switchport mode trunk
-switchport trunk allowed vlan all
-end
-wr
-```
-
-**SW0 Cliente**
-```
--- Accesso a las vlan LISTO
-enable
-configure terminal
-interface f0/10
-switchport mode access
-switchport access vlan 14
-no shutdown
-exit
-interface f0/11
-switchport mode access
-switchport access vlan 24
-no shutdown
-exit
-interface f0/12
-switchport mode access
-switchport access vlan 34
-no shutdown
-exit
-exit
-```
-
-**SW1 Cliente**
-```
-enable
-configure terminal
-interface f0/10
-switchport mode access
-switchport access vlan 44
-no shutdown
-exit
-interface f0/11
-switchport mode access
-switchport access vlan 14
-no shutdown
-exit
-interface f0/12
-switchport mode access
-switchport access vlan 24
-no shutdown
-exit
-exit
-wr
-```
-
-**Router J1**
-
-```
-enable
-configure terminal
-int fa0/0
-ip address 192.167.31.2 255.255.255.248
-no shutdown
-```
-
-**Router J2**
-
-```
-enable
-configure terminal
-int fa0/0
-ip address 192.167.31.3 255.255.255.248
-no shutdown
-```
-
-**HSRP**
-
-```
-ROUTER J1
-enable
-conf t
-interface fa0/0
-standby 1 ip 192.167.31.1
-standby 1 priority 150
-standby 1 preempt
-exit
-
-J2
-enable
-conf t
-standby 1 ip 192.167.31.1
-exit
-show standby
-```
-
-**Configuracion de IP's para J1, J2 y Router Jutiapa**
-
-```
-J1 - R JUTIAPA
-Dirección de red: 11.0.0.0/30 (Primera subred)
-Rango de direcciones utilizables: 11.0.0.1 - 11.0.0.2
-Broadcast: 11.0.0.3
-
--- IP
-enable
-configure terminal
-int fa1/0
-ip address 11.0.0.1 255.255.255.252
-no shutdown
-exit
-exit
-wr
-
-J2 - R JUTIAPA
-Dirección de red: 12.0.0.0/30 (Primera subred)
-Rango de direcciones utilizables: 12.0.0.1 - 12.0.0.2
-Broadcast: 12.0.0.3
-
--- IP
-enable
-configure terminal
-int fa1/0
-ip address 12.0.0.1 255.255.255.252
-no shutdown
-exit
-exit
-wr
-
-ROUTER Jutiapa
-enable
-configure terminal
-int fa4/0
-ip address 11.0.0.2 255.255.255.252
-no shutdown
-exit
-exit
-wr
-
-enable
-configure terminal
-int fa5/0
-ip address 12.0.0.2 255.255.255.252
-no shutdown
-exit
-exit
-wr
-```
-
-**RIP**
-
-```
--- RIP
-enable
-configure termina
-interface fa0/0 -- int que va al switch
-ip address 192.168.1.1 255.255.255.0
-no shutdown
-
-route rip
-version 2
-network 192.168.1.0 #red_general se agregan todas
-version 2
-exit
-```
-
-## Comandos usados en Escuintla
-
-**SW2**
-
-```
--- creacion de vlans
-enable
-configure terminal
-vtp mode server
-vtp domain escuintla
-vtp password 123
-vtp version 2
-vlan 14
-name rrhh
-exit
-vlan 24
-name ventas
-exit
-exit
-wr
--- Accesso a las vlan
-enable
-configure terminal
-interface f0/10
-switchport mode access
-switchport access vlan 14
-no shutdown
-exit
-interface f0/11
-switchport mode access
-switchport access vlan 24
-no shutdown
-exit
-exit
-wr
-
--- rpvst
-enable
-configure terminal
-spanning-tree mode pvst
-interface fa0/1
-switchport mode trunk
-```
-
-**Router ESCUINTLA**
-
-```
-enable
-configure terminal
-interface fa4/0
-no shutdown
-interface fa4/0.14
-encapsulation dot1Q 14
-ip address 192.148.31.1 255.255.255.248
-no shutdown
-exit
-interface fa4/0.24
-encapsulation dot1Q 24
-ip address 192.148.31.9 255.255.255.224
-no shutdown
-exit
-exit
-wr
-
-enable
-configure terminal
-interface fa4/0
-no shutdown
-interface fa4/0.14
-encapsulation dot1Q 14
-ip address 192.148.31.33 255.255.255.248
-no shutdown
-exit
-interface fa4/0.24
-encapsulation dot1Q 24
-ip address 192.148.31.1 255.255.255.224
-no shutdown
-```
